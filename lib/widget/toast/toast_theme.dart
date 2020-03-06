@@ -1,6 +1,6 @@
 part of '../../core/gui_core.dart';
 
-class _ToastTheme extends InheritedWidget {
+class ToastTheme {
   final TextStyle textStyle;
 
   final Color backgroundColor;
@@ -29,28 +29,24 @@ class _ToastTheme extends InheritedWidget {
 
   final Duration duration;
 
-  @override
-  bool updateShouldNotify(InheritedWidget oldWidget) => true;
+  ToastTheme(
+      {this.textStyle,
+      this.backgroundColor = const Color(0xDD000000),
+      this.radius = 10.0,
+      this.position = GuiPosition.center,
+      this.dismissOtherOnShow = false,
+      this.movingOnWindowChange = true,
+      this.textDirection = TextDirection.ltr,
+      this.textPadding = const EdgeInsets.symmetric(
+        horizontal: 8.0,
+        vertical: 4.0,
+      ),
+      this.textAlign = TextAlign.center,
+      this.handleTouch = false,
+      this.animationBuilder,
+      this.animationDuration,
+      this.animationCurve,
+      this.duration = const Duration(milliseconds: 2300)});
 
-  const _ToastTheme({
-    this.textStyle,
-    this.backgroundColor,
-    this.radius,
-    this.position,
-    this.dismissOtherOnShow,
-    this.movingOnWindowChange,
-    this.textPadding,
-    this.textAlign,
-    TextDirection textDirection,
-    this.handleTouch,
-    Widget child,
-    this.animationBuilder,
-    this.animationDuration,
-    this.animationCurve,
-    this.duration,
-  })  : textDirection = textDirection ?? TextDirection.ltr,
-        super(child: child);
-
-  static _ToastTheme of(BuildContext context) =>
-    context.dependOnInheritedWidgetOfExactType<_ToastTheme>();
+  //  static const 
 }

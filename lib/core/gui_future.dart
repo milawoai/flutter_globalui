@@ -6,7 +6,7 @@ class GuiFuture {
   final OverlayEntry _entry;
   final VoidCallback _onDismiss;
   bool _isShow = true;
-  final GlobalKey<__GuiToastContainerState> _containerKey;
+  final GlobalKey<__GuiContainerState> _containerKey;
   final Duration animationDuration;
 
    GuiFuture._(

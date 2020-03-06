@@ -4,43 +4,16 @@ class GuiWrapper extends StatefulWidget {
     /// Usually should be [MaterialApp] or [CupertinoApp].
     final Widget child;
 
-    /// Default titleStyle of [showModal].
-    final TextStyle modalTitleStyle;
+    final ToastTheme toastTheme;
 
-     /// TDefault textAlign of [textPadding].
-    final EdgeInsets modalTitlePadding;
+    final ModalTheme modalTheme;
 
-    /// Default textStyle of [showModal].
-    final TextStyle modalTextStyle;
-
-     /// TDefault textAlign of [textPadding].
-    final EdgeInsets modalTextPadding;
-
-    /// Default backgroundColor of [showModal].
-    final Color modalBackgroundColor;
-
-    /// Default radius of [showModal].
-    final double modalRadius;
-
-    /// Default align and padding of [showModal].
-    final GuiPosition modalPosition;
-
-    /// Default dismissOtherOnShow of [showModal].
-    final bool modalDismissOtherOnShow;
-
-    /// When the screen size changes due to the soft keyboard / rotation screen, toast will reposition.
-    final bool modalMovingOnWindowChange;
-
-    /// The animation builder of show/hide toast.
-    final GuiAnimationBuilder modalAnimationBuilder;
-
-    /// The animation duration of show/hide toast.
-    final Duration modalAnimationDuration;
-
-    /// The animation curve of show/hide toast.
-    final Curve modalAnimationCurve;
-
-  const GuiWrapper({Key key, this.modalTitleStyle, this.modalTitlePadding, this.modalTextStyle, this.modalTextPadding, this.modalBackgroundColor, this.modalRadius, this.modalPosition, this.modalDismissOtherOnShow, this.modalMovingOnWindowChange, this.modalAnimationBuilder, this.modalAnimationDuration, this.modalAnimationCurve, this.child}) : super(key: key);
+  const GuiWrapper({
+    Key key, 
+    this.toastTheme, 
+    this.modalTheme,
+     this.child
+  }) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _GuiWrapperState();
@@ -48,7 +21,10 @@ class GuiWrapper extends StatefulWidget {
 
 class _GuiWrapperState extends State<GuiWrapper> {
 
-   @override
+  ToastTheme get toastTheme => widget.toastTheme;
+  ModalTheme get modalTheme => widget.modalTheme;
+  
+  @override
   void initState() {
     super.initState();
   }
@@ -61,16 +37,30 @@ class _GuiWrapperState extends State<GuiWrapper> {
 
   @override
   Widget build(BuildContext context) {
-    // var overlay = Overlay(
-    //   initialEntries: [
-    //     OverlayEntry(
-    //       builder: (ctx) {
-    //         _contextMap[this] = ctx;
-    //         return widget.child;
-    //       },
-    //     ),
-    //   ],
-    // );
+    var overlay = Overlay(
+      initialEntries: [
+        OverlayEntry(
+          builder: (ctx) {
+            _contextMap[this] = ctx;
+            return widget.child;
+          },
+        ),
+      ],
+    );
+    
+    ToastTheme uToastTheme = toastTheme;
+    if (uToastTheme == null) {
+      uToastTheme = ToastTheme();
+    }
+    ModalTheme uModalTheme = modalTheme;
+    if (uModalTheme == null) {
+      uModalTheme = ModalTheme();
+    }
+
+    Widget w = Directionality(
+      child: overlay,
+      textDirection: TextDirection.ltr,
+    );
 
     // var typography = Typography(platform: Platform.isIOS ? TargetPlatform.iOS : TargetPlatform.android);
     // final TextTheme defaultTextTheme = typography.white;
@@ -81,7 +71,11 @@ class _GuiWrapperState extends State<GuiWrapper> {
     //       color: Colors.white,
     //     );
 
-    return null;
+    return _GuiTheme(
+      child: w,
+      toastTheme: uToastTheme,
+      modalTheme: uModalTheme
+    );
   }
 
 }

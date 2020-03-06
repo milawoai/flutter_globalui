@@ -6,8 +6,6 @@ class _GuiContainer extends StatefulWidget {
   final Widget child;
   final bool movingOnWindowChange;
   final GuiPosition position;
-  // 为true时会自己消失
-  final bool isToastType;
 
   final GuiAnimationBuilder animationBuilder;
   final Duration animationDuration;
@@ -19,7 +17,6 @@ class _GuiContainer extends StatefulWidget {
     this.child,
     this.movingOnWindowChange = false,
     this.position, 
-    this.isToastType = false,
     this.animationBuilder,
     this.animationDuration,
     this.animationCurve
@@ -33,7 +30,6 @@ class __GuiContainerState extends State<_GuiContainer>
     with WidgetsBindingObserver, SingleTickerProviderStateMixin {
 
   bool get movingOnWindowChange => widget.movingOnWindowChange;
-  bool get isToastType => widget.isToastType;
   double get offset => widget.position.offset;
   Duration get animationDuration => widget.animationDuration;
   AnimationController _animationController;
@@ -54,11 +50,6 @@ class __GuiContainerState extends State<_GuiContainer>
       _animateTo(1.0);
     });
 
-    if (isToastType && widget.duration != null) {
-      Future.delayed(widget.duration - animationDuration, () {
-        _animateTo(0.0);
-      });
-    }
     WidgetsBinding.instance.addObserver(this);
   }
 
