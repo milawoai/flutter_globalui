@@ -1,7 +1,8 @@
 name: globalui
 description: A new Flutter package project.
-version: 0.0.2
-author: wulawanshui@gmail.com
+version: 0.0.3
+authors:
+  - wulawanshui@gmail.com
 homepage: https://github.com/milawoai/flutter_globalui
 
 environment:
