@@ -9,6 +9,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GuiWrapper(
+            toastTheme: ToastTheme(
+              textStyle: TextStyle(color: Colors.red, fontSize: 20.0)
+      ),
         child: MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(

@@ -4,7 +4,7 @@ class ToastTheme {
   final TextStyle textStyle;
 
   final Color backgroundColor;
-
+  
   final double radius;
 
   final GuiPosition position;
@@ -38,8 +38,8 @@ class ToastTheme {
       this.movingOnWindowChange = true,
       this.textDirection = TextDirection.ltr,
       this.textPadding = const EdgeInsets.symmetric(
-        horizontal: 8.0,
-        vertical: 4.0,
+        horizontal: 28.0,
+        vertical: 15.0,
       ),
       this.textAlign = TextAlign.center,
       this.handleTouch = false,
