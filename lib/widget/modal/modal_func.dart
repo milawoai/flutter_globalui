@@ -211,22 +211,36 @@ GuiFuture showModal({
   btnMiddleLineColor ??= theme.btnMiddleLineColor ?? Color(0xDBDBDBDB);
   middleLineHeight ??= theme.middleLineHeight ?? 1.0;
 
-  List<Widget> buttonWidgets = buttonInfos
-      .map((item) => Expanded(
+  List<Widget> buttonWidgets = buttonInfos.asMap().keys.map((index) {
+    ModalButtonInfos item = buttonInfos[index];
+    BorderRadiusGeometry borderRaduis = BorderRadius.zero;
+    if (index == 0) {
+      borderRaduis =  index == buttonInfos.length - 1 ? 
+      BorderRadius.only(
+        bottomLeft: Radius.circular(radius),
+        bottomRight: Radius.circular(radius)
+      ) :
+      BorderRadius.only(bottomLeft: Radius.circular(radius));
+    } else if (index == buttonInfos.length - 1) {
+      BorderRadius.only(bottomRight: Radius.circular(radius));
+    }
+    return Expanded(
             flex: 1,
-            child: Container(
-              decoration: BoxDecoration(color: item.backgroundColor),
-              child: GestureDetector(
+            child: GestureDetector(
                   onTap: () {
                     item.onPressed();
                     if (item.isCloseModal) {
                       future?.dismiss();
                     }
                   },
-                  child: Center(child: Text(item.text, style: item.textStyle))),
-            ),
-          ))
-      .toList();
+              child: Container(
+                decoration: BoxDecoration(
+                  color: item.backgroundColor,
+                  borderRadius: borderRaduis,
+                ),
+                child: Center(child: Text(item.text, style: item.textStyle)))
+          ));
+  }).toList();
   Container _buttonArea =
       Container(height: 45, child: Row(children: buttonWidgets));
 
@@ -256,6 +270,13 @@ GuiFuture showModal({
     decoration: BoxDecoration(
       color: backgroundColor,
       borderRadius: BorderRadius.circular(radius),
+      boxShadow: [
+                    BoxShadow(
+                      color: Color(0x22000000),
+                      blurRadius: 5.0,
+                      offset: Offset(0.0, 3.0)
+                    ),
+      ]
     ),
     child: _column,
   );
